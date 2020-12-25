@@ -1,7 +1,6 @@
 defmodule MarketApiWeb.Auth.Guardian do
   use Guardian, otp_app: :market_api
 
-  alias Ecto.UUID
   alias MarketApi.Repo
   alias MarketApi.Schemas.User
 
@@ -16,16 +15,15 @@ defmodule MarketApiWeb.Auth.Guardian do
     |> MarketApi.fetch_user()
   end
 
-  def authenticate(%{"id" => user_id, "password" => password}) do
-    user_id
-    |> UUID.cast()
-    |> authenticate_user(password)
+  def authenticate(%{"email" => email, "password" => password}) do
+    case Regex.run(~r/@/, email) do
+      nil -> {:error, :unauthorized, "Invalid e-mail format!"}
+      _ -> authenticate_user(password, email)
+    end
   end
 
-  defp authenticate_user(:error, _password), do: {:error, :unauthorized, "Invalid ID format!"}
-
-  defp authenticate_user({:ok, user_id}, password) do
-    case Repo.get(Trainer, user_id) do
+  defp authenticate_user(password, email) do
+    case Repo.get_by(User, email: email) do
       nil -> {:error, :not_found, "User not found!"}
       user -> validate_password(user, password)
     end

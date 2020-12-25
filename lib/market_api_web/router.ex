@@ -11,6 +11,7 @@ defmodule MarketApiWeb.Router do
 
   scope "/api", MarketApiWeb do
     post "/users", UsersController, :create
+    post "/users/session", SessionsController, :create
   end
 
   scope "/api", MarketApiWeb do
