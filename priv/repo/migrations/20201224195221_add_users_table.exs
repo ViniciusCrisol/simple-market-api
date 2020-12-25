@@ -9,5 +9,6 @@ defmodule MarketApi.Repo.Migrations.AddUsersTable do
       add :password_hash, :string
       timestamps()
     end
+    create unique_index(:users, [:email])
   end
 end
