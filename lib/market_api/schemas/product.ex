@@ -1,20 +1,22 @@
-defmodule MarketApi.Schemas.Brand do
+defmodule MarketApi.Schemas.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias MarketApi.Schemas.Product
+  alias MarketApi.Schemas.{Category, Brand}
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
 
-  schema "brands" do
+  schema "products" do
     field :name, :string
+    field :price, :float
     field :description, :string
-    has_many(:product, Product)
+    belongs_to(:brand, Brand)
+    belongs_to(:category, Category)
     timestamps()
   end
 
-  @required_params [:name, :description]
+  @required_params [:name, :price, :description, :brand_id, :category_id]
 
   def build(params) do
     params
@@ -23,10 +25,10 @@ defmodule MarketApi.Schemas.Brand do
   end
 
   def changeset(params), do: create_changeset(%__MODULE__{}, params)
-  def changeset(brand, params), do: create_changeset(brand, params)
+  def changeset(product, params), do: create_changeset(product, params)
 
-  defp create_changeset(module_or_brand, params) do
-    module_or_brand
+  defp create_changeset(module_or_product, params) do
+    module_or_product
     |> cast(params, @required_params)
     |> validate_required(@required_params)
   end

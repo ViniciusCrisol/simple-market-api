@@ -18,6 +18,8 @@ defmodule MarketApiWeb.Router do
     pipe_through [:api, :auth]
 
     post "/brands", BrandsController, :create
+    post "/categories", CategoriesController, :create
+    post "/products", ProductsController, :create
   end
 
   if Mix.env() in [:dev, :test] do
