@@ -10,13 +10,15 @@ defmodule MarketApi.Schemas.Product do
   schema "products" do
     field :name, :string
     field :price, :float
+    field :quantity, :integer
     field :description, :string
+
+    timestamps()
     belongs_to(:brand, Brand)
     belongs_to(:category, Category)
-    timestamps()
   end
 
-  @required_params [:name, :price, :description, :brand_id, :category_id]
+  @product_params [:name, :price, :quantity, :description, :brand_id, :category_id]
 
   def build(params) do
     params
@@ -29,7 +31,12 @@ defmodule MarketApi.Schemas.Product do
 
   defp create_changeset(module_or_product, params) do
     module_or_product
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
+    |> cast(params, @product_params)
+    |> validate_required(@product_params)
+  end
+
+  def update_changeset(product, params) do
+    product
+    |> cast(params, @product_params)
   end
 end

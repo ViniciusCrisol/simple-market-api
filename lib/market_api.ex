@@ -9,4 +9,5 @@ defmodule MarketApi do
   defdelegate create_category(params), to: Category.Create, as: :call
 
   defdelegate create_product(params), to: Product.Create, as: :call
+  defdelegate update_product(params), to: Product.Update, as: :call
 end

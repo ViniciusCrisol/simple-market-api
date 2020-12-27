@@ -3,25 +3,19 @@ defmodule MarketApiWeb.CategoriesView do
 
   alias MarketApi.Schemas.Category
 
-  def render(
-        "create.json",
-        %{
-          category: %Category{
-            id: id,
-            name: name,
-            description: description,
-            inserted_at: inserted_at
-          }
+  def render("create.json", %{
+        category: %Category{
+          id: id,
+          name: name,
+          description: description,
+          inserted_at: inserted_at
         }
-      ) do
+      }) do
     %{
-      message: "Category created!",
-      category: %{
-        id: id,
-        name: name,
-        description: description,
-        inserted_at: inserted_at
-      }
+      id: id,
+      name: name,
+      description: description,
+      inserted_at: inserted_at
     }
   end
 end

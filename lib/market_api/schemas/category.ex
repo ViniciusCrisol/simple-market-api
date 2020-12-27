@@ -9,8 +9,9 @@ defmodule MarketApi.Schemas.Category do
   schema "categories" do
     field :name, :string
     field :description, :string
-    has_many(:product, Product)
+
     timestamps()
+    has_many(:product, Product)
   end
 
   @required_params [:name, :description]

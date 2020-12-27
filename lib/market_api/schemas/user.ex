@@ -9,6 +9,7 @@ defmodule MarketApi.Schemas.User do
     field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+
     timestamps()
   end
 
@@ -27,8 +28,8 @@ defmodule MarketApi.Schemas.User do
     module_or_user
     |> cast(params, @required_params)
     |> validate_required(@required_params)
-    |> validate_length(:password, min: 6)
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 6)
     |> put_pass_hash()
   end
 

@@ -19,7 +19,7 @@ defmodule MarketApiWeb.Router do
 
     post "/brands", BrandsController, :create
     post "/categories", CategoriesController, :create
-    post "/products", ProductsController, :create
+    resources "/products", ProductsController, only: [:create, :update]
   end
 
   if Mix.env() in [:dev, :test] do

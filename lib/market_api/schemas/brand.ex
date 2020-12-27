@@ -10,8 +10,9 @@ defmodule MarketApi.Schemas.Brand do
   schema "brands" do
     field :name, :string
     field :description, :string
-    has_many(:product, Product)
+
     timestamps()
+    has_many(:product, Product)
   end
 
   @required_params [:name, :description]
