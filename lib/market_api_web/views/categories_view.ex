@@ -3,7 +3,7 @@ defmodule MarketApiWeb.CategoriesView do
 
   alias MarketApi.Schemas.Category
 
-  def render("create.json", %{
+  def render("create_and_update.json", %{
         category: %Category{
           id: id,
           name: name,

@@ -5,7 +5,13 @@ defmodule MarketApiWeb.CategoriesController do
 
   def create(conn, params) do
     MarketApi.create_category(params)
-    |> handle_response(conn, "create.json", :created)
+    |> handle_response(conn, "create_and_update.json", :created)
+  end
+
+  def update(conn, params) do
+    params
+    |> MarketApi.update_category()
+    |> handle_response(conn, "create_and_update.json", :ok)
   end
 
   defp handle_response({:error, _error_status, _reason} = error, _conn, _view, _status), do: error

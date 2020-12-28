@@ -7,6 +7,8 @@ defmodule MarketApi.Schemas.Product do
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
 
+  @product_params [:name, :price, :quantity, :description, :brand_id, :category_id]
+
   schema "products" do
     field :name, :string
     field :price, :float
@@ -17,8 +19,6 @@ defmodule MarketApi.Schemas.Product do
     belongs_to(:brand, Brand)
     belongs_to(:category, Category)
   end
-
-  @product_params [:name, :price, :quantity, :description, :brand_id, :category_id]
 
   def build(params) do
     params
@@ -32,11 +32,13 @@ defmodule MarketApi.Schemas.Product do
   defp create_changeset(module_or_product, params) do
     module_or_product
     |> cast(params, @product_params)
+    |> validate_length(:name, min: 5)
     |> validate_required(@product_params)
   end
 
   def update_changeset(product, params) do
     product
     |> cast(params, @product_params)
+    |> validate_length(:name, min: 5)
   end
 end

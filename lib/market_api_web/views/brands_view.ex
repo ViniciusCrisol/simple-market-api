@@ -3,7 +3,7 @@ defmodule MarketApiWeb.BrandsView do
 
   alias MarketApi.Schemas.Brand
 
-  def render("create.json", %{
+  def render("create_and_update.json", %{
         brand: %Brand{
           id: id,
           name: name,

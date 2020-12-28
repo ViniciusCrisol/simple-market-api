@@ -4,6 +4,8 @@ defmodule MarketApi.Schemas.User do
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
+  @required_params [:name, :email, :password]
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -12,8 +14,6 @@ defmodule MarketApi.Schemas.User do
 
     timestamps()
   end
-
-  @required_params [:name, :email, :password]
 
   def build(params) do
     params
