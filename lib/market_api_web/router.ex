@@ -17,8 +17,8 @@ defmodule MarketApiWeb.Router do
   scope "/api", MarketApiWeb do
     pipe_through [:api, :auth]
 
-    post "/brands", BrandsController, :create
-    post "/categories", CategoriesController, :create
+    resources "/brands", BrandsController, only: [:create, :update]
+    resources "/categories", CategoriesController, [:create, :update]
     resources "/products", ProductsController, only: [:create, :update]
   end
 

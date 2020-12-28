@@ -7,6 +7,8 @@ defmodule MarketApi.Schemas.Brand do
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
 
+  @brand_params [:name, :description]
+
   schema "brands" do
     field :name, :string
     field :description, :string
@@ -14,8 +16,6 @@ defmodule MarketApi.Schemas.Brand do
     timestamps()
     has_many(:product, Product)
   end
-
-  @required_params [:name, :description]
 
   def build(params) do
     params
@@ -28,7 +28,14 @@ defmodule MarketApi.Schemas.Brand do
 
   defp create_changeset(module_or_brand, params) do
     module_or_brand
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
+    |> cast(params, @brand_params)
+    |> validate_length(:name, min: 2)
+    |> validate_required(@brand_params)
+  end
+
+  def update_changeset(brand, params) do
+    brand
+    |> cast(params, @brand_params)
+    |> validate_length(:name, min: 2)
   end
 end
